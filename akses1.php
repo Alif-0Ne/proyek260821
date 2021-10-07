@@ -21,6 +21,12 @@
         telp :
         <input type="text" name="telp" value="" class="form-control">
 
+        username :
+        <input type="text" name="username" value="" class="form-control">
+
+        password :
+        <input type="text" name="password" value="" class="form-control">
+
     </div>
     <center>
     <br>

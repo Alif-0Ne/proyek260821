@@ -22,11 +22,10 @@
         <input type="password" name="password" value="" class="form-control">
 
         level :
-        <!-- <input type="text" > -->
         <select name="level" class="form-control">
-            <option value="1">Petugas</option>
-            <option value="2">Admin</option>
-            <option value="3">Manager</option>
+            <option value="Petugas">Petugas</option>
+            <option value="Admin">Admin</option>
+            <option value="Manager">Manager</option>
         </select>
     </div>
     <center>
