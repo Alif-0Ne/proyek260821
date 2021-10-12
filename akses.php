@@ -11,18 +11,20 @@
 
     <h3>Tambah Produk</h3>
     <div class="container">
-    <form action="proses.php" method="post">
+    <form action="proses.php" method="post" enctype="multipart/form-data">
         nama produk :
         <input type="text" name="nama_produk" value="" class="form-control">
 
         deskripsi :
-        <input type="text" name="deskripsi" value="" class="form-control">
+        <br>
+        <textarea name="deskripsi" cols = 147 class = "from-control"></textarea>
+        <br>
 
         harga :
         <input type="number" name="harga" value="" class="form-control">
 
         foto produk :
-        <input type="text" name="foto_produk" value="" class="form-control">
+        <input type="file" name="foto_produk" value="" class="form-control">
     </div>
     <center>
     <br>

@@ -1,28 +1,62 @@
 <?php
 
 if($_POST){
-
-    $nama_produk=$_POST['nama_produk'];
-    $deskripsi=$_POST['deskripsi'];
-    $harga=$_POST['harga'];
-    $foto_produk=$_POST['foto_produk'];
-
-    if(empty($nama_produk)){
+    
+    if(empty($_POST['nama_produk'])){
         echo "<script>alert('nama produk tidak boleh kosong');location.href='akses.php';</script>";
-    } elseif(empty($deskripsi)){
+    } elseif(empty($_POST['deskripsi'])){
         echo "<script>alert('deskripsi tidak boleh kosong');location.href='akses.php';</script>";
-    } elseif(empty($harga)){
+    } elseif(empty($_POST['harga'])){
         echo "<script>alert('harga tidak boleh kosong');location.href='akses.php';</script>";
     } else {
         include "koneksi_toko_online.php";
-        $insert=mysqli_query($conn,"insert into produk (nama_produk, deskripsi, harga, foto_produk) value ('".$nama_produk."','".$deskripsi."','".$harga."','".$foto_produk."')");
-            if($insert){
+
+        // upload image
+        $target_dir = "images/";
+        $target_file = $target_dir . basename($_FILES["foto_produk"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+        // Check if file already exists
+        if (file_exists($target_file)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+        }
+
+        // Check file size
+        if ($_FILES["foto_produk"]["size"] > 5000000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+        }
+
+        // Allow certain file formats
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+        echo "Sorry, only JPG, JPEG, & PNG files are allowed.";
+        $uploadOk = 0;
+        }
+
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+        echo "Sorry, your file was not uploaded.";
+        // if everything is ok, try to upload file
+        } else {
+        if (move_uploaded_file($_FILES["foto_produk"]["tmp_name"], $target_file)) {
+            echo "The file " .htmlspecialchars( basename( $_FILES["foto_produk"]["name"])). " has been uploaded.";
+            
+            $insert=mysqli_query($conn,"insert into produk (nama_produk, deskripsi, harga, foto_produk) value ('".$_POST['nama_produk']."','".$_POST['deskripsi']."','".$_POST['harga']."','".basename($_FILES["foto_produk"]["name"])."')");
+            if($insert == !false){
             echo "<script>alert('Sukses menambahkan produk');location.href='akses.php';</script>";
             } else {
             echo "<script>alert('Gagal menambahkan produk');location.href='akses.php';</script>";
             }
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+        }
     }
 
+} else {
+    echo "404 not found";
 }
 
 ?>
